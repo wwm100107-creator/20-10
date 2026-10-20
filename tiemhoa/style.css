@@ -1,0 +1,1226 @@
+/* ==========================================================================
+   TIỆM HOA CỦA EM - PURE CODE VECTOR & CSS RENDERED STYLESHEET
+   Aesthetic: Warm Parchment, Botanical Pastel, Dusty Rose & Forest Green
+   ========================================================================== */
+
+:root {
+  --bg-cream: #f4eee3;
+  --bg-radial: radial-gradient(circle at 50% 45%, #fdfbf7 0%, #f4ece1 65%, #ebdccf 100%);
+  --bg-sage: #8f9888;
+  --bg-sage-grad: radial-gradient(circle at center, #9da694 0%, #838c7b 100%);
+  --text-dark: #383431;
+  --text-muted: #8c8378;
+  --pink-accent: #c25975;
+  --pink-deep: #a83d58;
+  --pink-soft: #fcf1f4;
+  --green-primary: #3b5a45;
+  --green-hover: #2e4736;
+  --gold-warm: #f6b93b;
+  --paper-ivory: #fcfaf4;
+  --kraft-brown: #eedfcb;
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 20px 45px rgba(65, 52, 40, 0.12);
+  --shadow-deep: 0 30px 60px rgba(40, 32, 25, 0.22);
+  --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Dancing Script', cursive;
+  --font-body: 'Lora', Georgia, serif;
+  --font-sans: 'Montserrat', sans-serif;
+  --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  color: var(--text-dark);
+  background: var(--bg-cream);
+  background-image: var(--bg-radial);
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ================= AMBIENT PARTICLES ================= */
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.ambient-particle {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.65;
+  animation: float-particle linear infinite;
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(105vh) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-10vh) rotate(360deg) scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* ================= MUSIC PILL CONTROLLER ================= */
+.music-pill {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(220, 210, 200, 0.75);
+  padding: 8px 18px 8px 12px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  transition: var(--transition-smooth);
+}
+
+.music-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.09);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.music-disc-wrap {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.music-disc {
+  color: var(--green-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.music-pill.playing .music-disc {
+  animation: spin-vinyl 4s linear infinite;
+}
+
+@keyframes spin-vinyl {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.music-notes-anim {
+  position: absolute;
+  top: -12px;
+  right: -6px;
+  display: none;
+  font-size: 11px;
+  color: var(--pink-accent);
+}
+
+.music-pill.playing .music-notes-anim {
+  display: flex;
+  gap: 4px;
+  animation: notes-bounce 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes notes-bounce {
+  0% { transform: translateY(0); opacity: 0.3; }
+  100% { transform: translateY(-5px); opacity: 1; }
+}
+
+.music-title {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ================= STORYBOOK MAIN WRAPPER ================= */
+.storybook-wrapper {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* ================= SCENE BASE & TRANSITIONS ================= */
+.scene {
+  position: absolute;
+  width: 100%;
+  max-width: 980px;
+  min-height: 520px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.97) translateY(14px);
+  transition: opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1), transform 0.65s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.65s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+}
+
+.scene.flip-out {
+  opacity: 0;
+  transform: perspective(1000px) rotateY(-30deg) scale(0.93);
+  transition: all 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scene-inner {
+  width: 100%;
+  padding: 10px 20px;
+}
+
+/* ================= SCENE 1: TIỆM HOA ================= */
+.scene-shop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  align-items: center;
+  gap: 40px;
+}
+
+.date-badge {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.main-title {
+  font-family: var(--font-serif);
+  font-size: 48px;
+  line-height: 1.18;
+  font-weight: 400;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+.main-title-center {
+  font-family: var(--font-serif);
+  font-size: 38px;
+  line-height: 1.25;
+  font-weight: 400;
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.script-pink {
+  font-family: var(--font-script);
+  font-weight: 700;
+  color: var(--pink-accent);
+  font-size: 1.24em;
+  display: inline-block;
+  padding: 0 4px;
+}
+
+.bottom-tagline {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  color: #a1998f;
+  margin-top: 36px;
+}
+
+/* Programmatic Shop Stage */
+.shop-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-building {
+  position: relative;
+  width: 420px;
+  max-width: 100%;
+}
+
+.shop-watercolor-card {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-watercolor-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 16px 36px rgba(60, 45, 30, 0.16));
+  transition: filter 0.6s ease, transform 0.6s ease;
+}
+
+.shop-building.door-opened .shop-watercolor-img {
+  filter: drop-shadow(0 16px 40px rgba(245, 175, 45, 0.35)) drop-shadow(0 0 35px rgba(255, 230, 150, 0.45));
+}
+
+/* Interior room behind the doorway cutout */
+.door-interior-room {
+  position: absolute;
+  left: 27.246%;
+  top: 41.548%;
+  width: 17.578%;
+  height: 40.733%;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 50%, #fffbe6 0%, #ffdf9e 40%, #f5b041 75%, #ba4a00 100%);
+  box-shadow: inset 0 0 16px rgba(186, 74, 0, 0.55);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 4px 0 4px;
+}
+
+.door-light-spill {
+  position: absolute;
+  bottom: 0;
+  left: -20px;
+  width: 140%;
+  height: 50%;
+  background: radial-gradient(ellipse at bottom, rgba(255, 235, 150, 0.95) 0%, rgba(255, 210, 80, 0.4) 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.shop-building.door-opened .door-light-spill {
+  opacity: 1;
+}
+
+.interior-cozy-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all 0.7s ease;
+}
+
+.shop-building.door-opened .interior-cozy-top {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.door-lamp-glow {
+  font-size: 11px;
+  filter: drop-shadow(0 0 8px #f1c40f);
+}
+
+.door-sign-wood {
+  background: #fffdfa;
+  border: 1px solid #dcd1bf;
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-family: var(--font-script);
+  font-size: 10px;
+  font-weight: 700;
+  color: #a83d58;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+}
+
+.door-cozy-shelves {
+  display: flex;
+  gap: 4px;
+  font-size: 11.5px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.7s ease;
+}
+
+.shop-building.door-opened .door-cozy-shelves {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.interior-wood-floor {
+  width: 100%;
+  height: 8px;
+  background: #8e583c;
+  border-top: 1px solid #633a24;
+}
+
+/* 3D Doorway Portal */
+.door-portal-3d {
+  position: absolute;
+  left: 27.246%;
+  top: 41.548%;
+  width: 17.578%;
+  height: 40.733%;
+  z-index: 4;
+  perspective: 800px;
+  transform-style: preserve-3d;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.door-leaf-3d {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.95s cubic-bezier(0.2, 0.85, 0.3, 1), box-shadow 0.9s ease;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.door-leaf-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+}
+
+/* 3D Door Swing State */
+.shop-building.door-opened .door-leaf-3d {
+  transform: perspective(800px) rotateY(-82deg);
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.38);
+}
+
+/* Brass Hanging Bell Hotspot on shop facade */
+.door-bell-wrap {
+  position: absolute;
+  top: 41%;
+  left: 17%;
+  width: 36px;
+  height: 48px;
+  cursor: pointer;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bell-svg {
+  transform-origin: top center;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.25));
+}
+
+.door-bell-wrap:hover .bell-svg {
+  animation: bell-jingle 0.6s ease infinite alternate;
+}
+
+.door-bell-wrap.ringing .bell-svg {
+  animation: bell-ring-hard 0.7s ease forwards;
+}
+
+@keyframes bell-jingle {
+  0% { transform: rotate(-8deg); }
+  100% { transform: rotate(8deg); }
+}
+
+@keyframes bell-ring-hard {
+  0% { transform: rotate(0); }
+  20% { transform: rotate(24deg); }
+  40% { transform: rotate(-22deg); }
+  60% { transform: rotate(15deg); }
+  80% { transform: rotate(-10deg); }
+  100% { transform: rotate(0); }
+}
+
+.bell-radiate-ring {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(249, 202, 36, 0.4);
+  box-shadow: 0 0 12px rgba(249, 202, 36, 0.8);
+  animation: pulse-ring 2s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { transform: scale(0.9); opacity: 0.4; }
+  50% { transform: scale(1.4); opacity: 0.85; }
+}
+
+/* Action Dock below shop */
+.shop-action-dock {
+  margin-top: 18px;
+  text-align: center;
+  min-height: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene-hint {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.btn-primary-pill {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 10px 24px;
+  border-radius: 25px;
+  background: var(--paper-ivory);
+  border: 1px solid rgba(190, 180, 168, 0.8);
+  color: var(--text-dark);
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: var(--transition-smooth);
+}
+
+.btn-primary-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--pink-accent);
+  color: var(--pink-accent);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.09);
+}
+
+.shop-enter-btn {
+  display: none;
+  animation: slide-up-fade 0.5s ease forwards;
+}
+
+@keyframes slide-up-fade {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= SCENE 2: CHỌN HOA ================= */
+.scene-pick-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.scene-header {
+  text-align: center;
+  max-width: 600px;
+}
+
+.scene-subtitle {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 6px;
+}
+
+.pick-workspace {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 50px;
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* Botanical Flower Shelf */
+.botanical-shelf-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.botanical-flowers-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  padding: 0 8px;
+}
+
+.flower-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition-bounce);
+}
+
+.flower-art-box {
+  position: relative;
+  width: 76px;
+  height: 145px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.flower-art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease, opacity 0.3s ease;
+  transform-origin: bottom center;
+  filter: drop-shadow(0 4px 10px rgba(60, 45, 30, 0.08));
+}
+
+.flower-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+  transform-origin: bottom center;
+}
+
+.flower-card:hover:not(.selected) .flower-art-img,
+.flower-card:hover:not(.selected) .flower-svg {
+  transform: translateY(-8px) scale(1.08) rotate(2deg);
+  filter: drop-shadow(0 10px 18px rgba(60, 45, 30, 0.16));
+}
+
+/* Selected state: checkmark badge */
+.flower-check-badge {
+  position: absolute;
+  top: 36%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(59, 90, 69, 0.95);
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.flower-card.selected .flower-art-img,
+.flower-card.selected .flower-svg {
+  opacity: 0.35;
+  filter: grayscale(25%);
+}
+
+.flower-card.selected .flower-check-badge {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.flower-caption {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  white-space: nowrap;
+}
+
+.wood-shelf-plank {
+  width: 100%;
+  height: 7px;
+  background: linear-gradient(180deg, #d8c8b1 0%, #bead95 100%);
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  margin-top: 6px;
+}
+
+/* Kraft Bouquet Assembly Stage */
+.bouquet-assembly-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kraft-bouquet-container {
+  position: relative;
+  width: 250px;
+  height: 375px;
+  filter: drop-shadow(0 14px 28px rgba(50, 35, 20, 0.16));
+  user-select: none;
+}
+
+.kraft-paper-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bouquet-flowers-bed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.empty-bouquet-hint {
+  position: absolute;
+  top: 95px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #8c7e6b;
+  text-align: center;
+  width: 165px;
+  z-index: 3;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.kraft-paper-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Sprouted botanical flower in bouquet */
+.sprouted-flower-img {
+  position: absolute;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 16px rgba(50, 35, 20, 0.16));
+  animation: botanical-sprout 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes botanical-sprout {
+  0% {
+    opacity: 0;
+    transform: translate(var(--tx, 0px), calc(var(--ty, 0px) + 25px)) scale(0.3) rotate(var(--rot, 0deg));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(var(--sc, 1)) rotate(var(--rot, 0deg));
+  }
+}
+
+.counter-pill {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+/* Dock button */
+.dock-btn-wrap {
+  margin-top: 20px;
+  min-height: 48px;
+}
+
+.btn-green-pill {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 10px 28px;
+  border-radius: 30px;
+  background: var(--green-primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(59, 90, 69, 0.28);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: var(--transition-smooth);
+}
+
+.btn-green-pill.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.btn-green-pill:hover {
+  background: var(--green-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(59, 90, 69, 0.38);
+}
+
+/* ================= SCENE 3 & 4: CENTER LAYOUT ================= */
+.scene-center-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.center-bouquet-display {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.complete-bouquet-wrapper {
+  position: relative;
+  width: 250px;
+  height: 375px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bouquet-static-art {
+  width: 100%;
+  height: 100%;
+}
+
+/* Satin Ribbon Bow Hotspot (Scene 3) */
+.ribbon-bow-hotspot {
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95px;
+  height: 75px;
+  cursor: pointer;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.satin-bow-svg,
+.satin-bow-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 6px 14px rgba(120, 35, 55, 0.22));
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+}
+
+.ribbon-bow-hotspot:hover .satin-bow-svg,
+.ribbon-bow-hotspot:hover .satin-bow-img {
+  transform: scale(1.15) rotate(-2deg);
+  filter: drop-shadow(0 10px 22px rgba(120, 35, 55, 0.35));
+}
+
+.bow-touch-ring {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px dashed rgba(194, 89, 117, 0.6);
+  animation: pulse-bow-ring 1.8s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes pulse-bow-ring {
+  0% { transform: scale(0.7); opacity: 0.9; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* Mini Gift Tag (Scene 4) */
+.mini-gift-tag {
+  position: absolute;
+  top: 48%;
+  right: 12%;
+  cursor: pointer;
+  z-index: 22;
+  transition: transform 0.25s ease;
+}
+
+.mini-gift-tag:hover {
+  transform: scale(1.08) rotate(-2deg);
+}
+
+.tag-string {
+  width: 1.5px;
+  height: 16px;
+  background: #c8b9a2;
+  margin: 0 auto;
+}
+
+.tag-body {
+  background: #fffdfa;
+  border: 1px solid #dcd4c6;
+  border-radius: 6px;
+  padding: 8px 12px 6px 12px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+.tag-to {
+  display: block;
+  font-family: var(--font-script);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.25;
+  margin-bottom: 5px;
+}
+
+.tag-btn {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: var(--pink-accent);
+  color: #fff;
+}
+
+.tag-glow-pulse {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  box-shadow: 0 0 14px rgba(194, 89, 117, 0.55);
+  animation: pulse-ring 1.8s infinite ease-in-out;
+  pointer-events: none;
+}
+
+/* ================= SCENE 5: BỨC THƯ TÌNH & POLAROID ================= */
+#scene-5 {
+  max-width: 100%;
+  padding: 0;
+}
+
+.letter-modal-backdrop {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 15px;
+  background-color: var(--bg-sage);
+  background-image: var(--bg-sage-grad);
+  transition: background-color 0.8s ease;
+}
+
+.letter-stationery-card {
+  position: relative;
+  background: var(--paper-ivory);
+  background-image: linear-gradient(135deg, #fdfbf7 0%, #f7f3ea 100%);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 630px;
+  padding: 36px 38px 30px 38px;
+  box-shadow: var(--shadow-deep), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+  transform: translateY(20px) scale(0.95);
+  opacity: 0;
+  transition: all 0.7s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+#scene-5.active .letter-stationery-card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.btn-close-letter {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(220, 215, 205, 0.5);
+  border: none;
+  font-size: 13px;
+  color: #7a7266;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.btn-close-letter:hover {
+  background: rgba(194, 89, 117, 0.15);
+  color: var(--pink-accent);
+}
+
+.letter-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.letter-date-pill {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.letter-stamp-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.letter-wax-seal {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(168, 61, 88, 0.28));
+  transform: rotate(-6deg);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.letter-wax-seal:hover {
+  transform: rotate(6deg) scale(1.15);
+}
+
+.letter-stamp {
+  border: 1px dashed #c0b4a4;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-family: var(--font-sans);
+  font-size: 8.5px;
+  color: #8c8273;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.letter-grid-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.letter-salutation {
+  font-family: var(--font-script);
+  font-size: 32px;
+  color: var(--pink-accent);
+  font-weight: 700;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.letter-paragraphs {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #4a453f;
+}
+
+.letter-paragraphs p {
+  margin-bottom: 14px;
+}
+
+.highlight-line {
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.letter-signature-block {
+  text-align: right;
+  margin-top: 18px;
+}
+
+.signature-text {
+  font-family: var(--font-script);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--pink-accent);
+}
+
+/* Polaroid Photo Column */
+.letter-photo-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.polaroid-frame-box {
+  position: relative;
+  background: #ffffff;
+  padding: 10px 10px 16px 10px;
+  border-radius: 4px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0,0,0,0.08);
+  width: 180px;
+  text-align: center;
+  transform: rotate(2deg);
+  transition: transform 0.3s ease;
+}
+
+.polaroid-frame-box:hover {
+  transform: rotate(0deg) scale(1.03);
+}
+
+.washi-tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 14px;
+  background: rgba(220, 118, 143, 0.55);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 1px;
+}
+
+.polaroid-photo-viewport {
+  width: 100%;
+  aspect-ratio: 1 / 1.22;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #e9ecef;
+}
+
+.polaroid-photo-viewport img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.polaroid-caption-text {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: #7a7267;
+  margin-top: 10px;
+}
+
+.letter-buttons-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 180px;
+}
+
+.btn-heart-shower {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: var(--pink-accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(194, 89, 117, 0.35);
+  transition: var(--transition-smooth);
+}
+
+.btn-heart-shower:hover {
+  transform: translateY(-2px);
+  background: var(--pink-deep);
+  box-shadow: 0 5px 14px rgba(194, 89, 117, 0.45);
+}
+
+/* ================= TOAST BUBBLE ================= */
+.toast-bubble {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: rgba(56, 52, 49, 0.92);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  padding: 9px 20px;
+  border-radius: 25px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 200;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast-bubble.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .scene-shop-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .main-title {
+    font-size: 34px;
+  }
+
+  .pick-workspace {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .letter-grid-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .letter-photo-pane {
+    order: -1;
+  }
+
+  .letter-stationery-card {
+    padding: 24px 20px;
+  }
+}

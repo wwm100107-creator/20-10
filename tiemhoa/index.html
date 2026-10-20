@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiệm Hoa Của Em - Món Quà Yêu Thương</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient floating particles (leaves, petals, sparkles) -->
+  <div id="ambient-particles" class="particles-container"></div>
+
+  <!-- Music Pill Control -->
+  <div class="music-pill" id="music-pill" title="Bật/Tắt nhạc nền">
+    <div class="music-disc-wrap">
+      <div class="music-disc" id="music-disc">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="12" r="3.5" fill="currentColor"/>
+          <path d="M12 2 A10 10 0 0 1 22 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="music-notes-anim">
+        <span>♪</span><span>♫</span>
+      </div>
+    </div>
+    <span class="music-title" id="music-title">Tựa vào vai anh...</span>
+  </div>
+
+  <!-- Background Music Audio -->
+  <audio id="bg-music" src="music.mp3" loop preload="auto"></audio>
+
+  <!-- Main Storybook Container -->
+  <main class="storybook-wrapper" id="storybook">
+
+    <!-- ================= SCENE 1: TIỆM HOA ================= -->
+    <section class="scene active" id="scene-1">
+      <div class="scene-inner scene-shop-grid">
+        <!-- Left Column: Typography -->
+        <div class="shop-hero-text">
+          <div class="date-badge">• 20 THÁNG 10 - MỘT NGÀY THẬT ĐẶC BIỆT •</div>
+          <h1 class="main-title">
+            Tiệm hoa<br>
+            chỉ mở<br>
+            <span class="script-pink">một ngày</span><br>
+            trong năm.
+          </h1>
+          <div class="bottom-tagline">
+            MỘT CHÚT HOA • MỘT CHÚT THƯƠNG • THẬT NHIỀU YÊU
+          </div>
+        </div>
+
+        <!-- Right Column: Botanical Watercolor Flower Shop with 3D Swinging Door -->
+        <div class="shop-stage">
+          <div class="shop-building" id="shop-building">
+            <div class="shop-watercolor-card">
+              <!-- Interior room behind doorway cutout -->
+              <div class="door-interior-room">
+                <div class="door-light-spill"></div>
+                <div class="interior-cozy-top">
+                  <div class="door-lamp-glow">💡</div>
+                  <div class="door-sign-wood">Chỉ cho em ♡</div>
+                </div>
+                <div class="door-cozy-shelves">
+                  <span>🌷</span><span>💐</span><span>🌸</span>
+                </div>
+                <div class="interior-wood-floor"></div>
+              </div>
+
+              <!-- Shop facade with transparent doorway cutout -->
+              <img src="assets_art/shop_cutout.png" alt="Tiệm hoa của em" class="shop-watercolor-img" id="shop-art-img">
+
+              <!-- 3D Doorway Portal with Swinging Watercolor Door Leaf -->
+              <div class="door-portal-3d">
+                <div class="door-leaf-3d" id="door-leaf" title="Chạm để mở cửa tiệm hoa">
+                  <img src="assets_art/door_leaf.png" alt="Cánh cửa tiệm hoa" class="door-leaf-img">
+                </div>
+              </div>
+
+              <!-- Brass Hanging Bell Hotspot on shop facade -->
+              <div class="door-bell-wrap" id="door-bell" title="Chạm để rung chuông đón em">
+                <svg viewBox="0 0 24 36" width="22" height="34" class="bell-svg">
+                  <line x1="12" y1="0" x2="12" y2="10" stroke="#b38728" stroke-width="2"/>
+                  <path d="M 6,18 C 6,11 18,11 18,18 L 20,24 L 4,24 Z" fill="#f6b93b" stroke="#996515" stroke-width="1"/>
+                  <ellipse cx="12" cy="24" rx="8" ry="2" fill="#dfa127" stroke="#996515" stroke-width="0.8"/>
+                  <circle cx="12" cy="27" r="2.2" fill="#835209"/>
+                </svg>
+                <div class="bell-radiate-ring"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scene 1 Action Dock -->
+          <div class="shop-action-dock">
+            <p class="scene-hint" id="shop-hint">Chạm chiếc chuông bên cửa. Anh đang đợi em</p>
+            <button class="btn-primary-pill shop-enter-btn" id="btn-enter-shop">
+              Chào Bé iu, bó hoa của em đang chờ ♡
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCENE 2: CHỌN HOA ================= -->
+    <section class="scene" id="scene-2">
+      <div class="scene-inner scene-pick-grid">
+        <!-- Header -->
+        <div class="scene-header">
+          <div class="date-badge">• MỘT BÓ HOA - NĂM ĐIỀU MUỐN NÓI •</div>
+          <h1 class="main-title-center">
+            Em chọn hoa,<br>
+            anh gửi <span class="script-pink">yêu thương.</span>
+          </h1>
+          <p class="scene-subtitle">
+            Chạm từng bông hoa để đặt vào bó. Chọn đủ 5 bông để hoàn thành bó hoa của em.
+          </p>
+        </div>
+
+        <div class="pick-workspace">
+          <!-- Flower Shelf with 5 Programmatic Botanical Flowers -->
+          <div class="botanical-shelf-wrap">
+            <div class="botanical-flowers-row">
+
+              <!-- Flower 1: Tulip -->
+              <div class="flower-card" data-id="tulip" data-name="Tulip" data-meaning="Tình yêu dịu dàng &amp; chân thành nhất">
+                <div class="flower-art-box">
+                  <img src="assets_art/tulip.png" alt="Tulip" class="flower-art-img">
+                  <div class="flower-check-badge">✓</div>
+                </div>
+                <span class="flower-caption">Tulip</span>
+              </div>
+
+              <!-- Flower 2: Sunflower -->
+              <div class="flower-card" data-id="sunflower" data-name="Hướng dương" data-meaning="Luôn hướng về em như ánh mặt trời">
+                <div class="flower-art-box">
+                  <img src="assets_art/sunflower.png" alt="Hướng dương" class="flower-art-img">
+                  <div class="flower-check-badge">✓</div>
+                </div>
+                <span class="flower-caption">Hướng dương</span>
+              </div>
+
+              <!-- Flower 3: Rose -->
+              <div class="flower-card" data-id="rose" data-name="Hoa hồng" data-meaning="Tình yêu nồng nàn &amp; duy nhất của anh">
+                <div class="flower-art-box">
+                  <img src="assets_art/rose.png" alt="Hoa hồng" class="flower-art-img">
+                  <div class="flower-check-badge">✓</div>
+                </div>
+                <span class="flower-caption">Hoa hồng</span>
+              </div>
+
+              <!-- Flower 4: Daisy -->
+              <div class="flower-card" data-id="daisy" data-name="Cúc nhỏ" data-meaning="Nụ cười trong trẻo khiến anh xao xuyến">
+                <div class="flower-art-box">
+                  <img src="assets_art/daisy.png" alt="Cúc nhỏ" class="flower-art-img">
+                  <div class="flower-check-badge">✓</div>
+                </div>
+                <span class="flower-caption">Cúc nhỏ</span>
+              </div>
+
+              <!-- Flower 5: Baby's Breath -->
+              <div class="flower-card" data-id="baby" data-name="Baby trắng" data-meaning="Dịu dàng nâng niu, chở che từng khoảnh khắc">
+                <div class="flower-art-box">
+                  <img src="assets_art/baby.png" alt="Baby trắng" class="flower-art-img">
+                  <div class="flower-check-badge">✓</div>
+                </div>
+                <span class="flower-caption">Baby trắng</span>
+              </div>
+
+            </div>
+            <!-- Wooden Display Shelf Plank -->
+            <div class="wood-shelf-plank"></div>
+          </div>
+
+          <!-- Dynamic Kraft Bouquet Assembly -->
+          <div class="bouquet-assembly-stage">
+            <div class="kraft-bouquet-container" id="kraft-bouquet">
+              <!-- Back Watercolor Kraft Paper Layer -->
+              <img src="assets_art/kraft_back.png" alt="Giấy gói hoa kraft" class="kraft-paper-back">
+
+              <!-- Flower Arranging Slot (Botanical Flowers bloom here) -->
+              <div class="bouquet-flowers-bed" id="bouquet-flowers-bed">
+                <div class="empty-bouquet-hint" id="empty-bouquet-hint">
+                  Bó hoa của em đang chờ những điều dịu dàng ♡
+                </div>
+              </div>
+
+              <!-- Front Folded Watercolor Kraft Paper Wrap -->
+              <img src="assets_art/kraft_front.png" alt="Nếp gấp giấy gói kraft" class="kraft-paper-front">
+            </div>
+
+            <!-- Counter -->
+            <div class="counter-pill" id="flower-counter">0 / 5 BÔNG HOA</div>
+          </div>
+        </div>
+
+        <!-- Next Button -->
+        <div class="dock-btn-wrap">
+          <button class="btn-green-pill" id="btn-next-scene-3">
+            Tiếp tục →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCENE 3: THẮT NƠ ================= -->
+    <section class="scene" id="scene-3">
+      <div class="scene-inner scene-center-layout">
+        <div class="scene-header">
+          <h1 class="main-title-center">
+            Thắt một chiếc nơ,<br>
+            gửi trọn <span class="script-pink">yêu thương.</span>
+          </h1>
+        </div>
+
+        <div class="center-bouquet-display">
+          <!-- Bouquet Display with clickable Bow Hotspot -->
+          <div class="complete-bouquet-wrapper" id="bow-interactive-zone">
+            <!-- Full Bouquet SVG Art -->
+            <div class="bouquet-static-art" id="bow-bouquet-art"></div>
+
+            <!-- Satin Ribbon Bow Hotspot -->
+            <div class="ribbon-bow-hotspot" id="ribbon-bow-hotspot" title="Chạm để thắt chiếc nơ hồng">
+              <img src="assets_art/bow.png" alt="Nơ ruy băng satin" class="satin-bow-img" id="satin-bow-img">
+              <!-- Pulsing invitation ring -->
+              <div class="bow-touch-ring"></div>
+            </div>
+          </div>
+
+          <p class="scene-hint" id="bow-hint">Chạm vào dải ruy băng để hoàn thành bó hoa</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCENE 4: TẤM THIỆP TRONG BÓ HOA ================= -->
+    <section class="scene" id="scene-4">
+      <div class="scene-inner scene-center-layout">
+        <div class="scene-header">
+          <h1 class="main-title-center">
+            Một bó hoa,<br>
+            cho người anh <span class="script-pink">thương nhất.</span>
+          </h1>
+        </div>
+
+        <div class="center-bouquet-display">
+          <div class="complete-bouquet-wrapper">
+            <!-- Bouquet with Tied Bow -->
+            <div class="bouquet-static-art" id="card-bouquet-art"></div>
+
+            <!-- Attached Mini Card Tag -->
+            <div class="mini-gift-tag" id="mini-gift-tag" title="Nhấn để mở bức thư tình">
+              <div class="tag-string"></div>
+              <div class="tag-body">
+                <span class="tag-to">Gửi người<br>anh thương ♡</span>
+                <span class="tag-btn">MỞ THIỆP</span>
+              </div>
+              <div class="tag-glow-pulse"></div>
+            </div>
+          </div>
+
+          <p class="scene-hint">Chạm vào tấm thiệp nhỏ để đọc lời anh gửi.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCENE 5: BỨC THƯ TÌNH & POLAROID ================= -->
+    <section class="scene" id="scene-5">
+      <div class="letter-modal-backdrop">
+        <div class="letter-stationery-card" id="letter-stationery-card">
+          <!-- Close button to inspect bouquet -->
+          <button class="btn-close-letter" id="btn-close-letter" title="Đóng thư để xem lại hoa">✕</button>
+
+          <!-- Vintage Postage & Header -->
+          <div class="letter-header-row">
+            <div class="letter-date-pill">• 20 THÁNG 10 - TỪ ANH, VỚI YÊU THƯƠNG •</div>
+            <div class="letter-stamp-group">
+              <img src="assets_art/wax_seal.png" alt="Dấu sáp hoa hồng" class="letter-wax-seal" title="Dấu sáp niêm phong hoa hồng">
+              <div class="letter-stamp">
+                <span>BƯU ĐIỆN TÌNH YÊU</span>
+                <small>20.10 ♡</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Letter Main Grid -->
+          <div class="letter-grid-layout">
+            <!-- Left: Text Body -->
+            <div class="letter-text-pane">
+              <h2 class="letter-salutation" id="letter-salutation-text">Gửi Bé Iu của anh,</h2>
+
+              <div class="letter-paragraphs" id="letter-paragraphs-content">
+                <p>Chúc mừng ngày 20/10, vợ iuu của anh!</p>
+
+                <p>Anh muốn tặng em một bó hoa thật đặc biệt. Mỗi bông là một điều anh mong cho em: bình an, niềm vui, những ước mơ thành hiện thực và thật nhiều yêu thương.</p>
+
+                <p>Cảm ơn em vì những quan tâm nhỏ bé, những lần lắng nghe và nụ cười mà anh mê ơi là mê. Mặc dù tụi mình có nhiều lúc không hiểu nhau, có lúc nặng lời nhưng chúng ta vẫn chọn ở lại với nhau. Anh rất biết ơn vì cả 2 đứa mình đều đã cùng cố gắng vì nhau rất nhiều.
+</p>
+
+                <p>Nếu hôm nay có ai hỏi anh muốn tặng em điều gì, anh sẽ nói: một ngày thật vui, một ngày thật bình an, và thật nhiều ngày sau vẫn được ở bên em.</p>
+
+                <p class="highlight-line">Anh yêu em rất nhiều. ♡</p>
+              </div>
+
+              <!-- Hand-written Sign-off -->
+              <div class="letter-signature-block">
+                <span class="signature-text" id="letter-signature-text">Thương em, Anh ♡</span>
+              </div>
+            </div>
+
+            <!-- Right: Polaroid Frame -->
+            <div class="letter-photo-pane">
+              <div class="polaroid-frame-box" id="polaroid-frame-box">
+                <!-- Decorative Washi Tape / Pin -->
+                <div class="washi-tape"></div>
+
+                <!-- Photo Container -->
+                <div class="polaroid-photo-viewport">
+                  <img src="assets_art/girl_watercolor.jpg" alt="Ảnh kỷ niệm">
+                </div>
+
+                <!-- Handwritten Polaroid Caption -->
+                <div class="polaroid-caption-text" id="polaroid-caption-text">
+                  Người anh luôn muốn tặng hoa ♡
+                </div>
+              </div>
+
+              <!-- Romantic Action Buttons -->
+              <div class="letter-buttons-row">
+                <button class="btn-heart-shower" id="btn-heart-shower">
+                  ❤️ Thả tim cho anh
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sweet Toast Floating Notification -->
+  <div class="toast-bubble" id="toast-bubble"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
