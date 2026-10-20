@@ -4,6 +4,70 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // ================= FULLSCREEN CONTROLLER =================
+  const fsBtn = document.getElementById('fullscreen-pill');
+  function isFs() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+  }
+  function updateFsIcon() {
+    const fs = isFs();
+    if (fsBtn) {
+      const enterIcon = fsBtn.querySelector('.fs-icon-enter');
+      const exitIcon = fsBtn.querySelector('.fs-icon-exit');
+      if (enterIcon && exitIcon) {
+        enterIcon.style.display = fs ? 'none' : 'block';
+        exitIcon.style.display = fs ? 'block' : 'none';
+      }
+    }
+  }
+  function reqFullscreen() {
+    try {
+      const doc = document.documentElement;
+      if (!isFs()) {
+        const req = doc.requestFullscreen || doc.webkitRequestFullscreen || doc.mozRequestFullScreen || doc.msRequestFullscreen;
+        if (req) {
+          const p = req.call(doc);
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        }
+      }
+    } catch (_) {}
+  }
+  function exitFs() {
+    try {
+      if (isFs()) {
+        const exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+        if (exit) {
+          const p = exit.call(document);
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        }
+      }
+    } catch (_) {}
+  }
+
+  if (fsBtn) {
+    fsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isFs()) {
+        exitFs();
+      } else {
+        reqFullscreen();
+      }
+    });
+  }
+
+  ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+    document.addEventListener(evt, updateFsIcon);
+  });
+
+  // Tự động kích hoạt toàn màn hình ở mọi tương tác chạm/click
+  ['click', 'touchstart', 'pointerdown'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      reqFullscreen();
+    }, { passive: true, capture: true });
+  });
+
+  try { reqFullscreen(); } catch (_) {}
+
   // ================= 1. WEB AUDIO SYNTHESIZER =================
   const SoundFX = {
     ctx: null,

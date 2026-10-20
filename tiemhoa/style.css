@@ -83,6 +83,45 @@ html, body {
   }
 }
 
+/* ================= FULLSCREEN PILL CONTROLLER ================= */
+.fullscreen-pill {
+  position: fixed;
+  top: 20px;
+  right: calc(24px + 185px + 12px);
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(220, 210, 200, 0.75);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #3b3a36;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  transition: var(--transition-smooth);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.fullscreen-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.09);
+  background: rgba(255, 255, 255, 0.96);
+  color: #d17b88;
+}
+@media (max-width: 600px) {
+  .fullscreen-pill {
+    top: 15px;
+    right: auto;
+    left: 15px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
 /* ================= MUSIC PILL CONTROLLER ================= */
 .music-pill {
   position: fixed;

@@ -38,10 +38,52 @@ window.TINY_PERF = (() => {
 </script>
 
     <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
     <title>Quà 20/10 cho vợ iu</title>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
     
     <style>
+        .fullscreen-toggle-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 999999;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(18, 25, 44, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            transition: all 0.25s ease;
+            opacity: 0.82;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .fullscreen-toggle-btn:hover {
+            opacity: 1;
+            transform: scale(1.08);
+            background: rgba(28, 38, 66, 0.85);
+            border-color: rgba(255, 207, 230, 0.55);
+            box-shadow: 0 0 18px rgba(255, 180, 210, 0.35);
+        }
+        @media (max-width: 600px) {
+            .fullscreen-toggle-btn {
+                top: 12px;
+                right: 12px;
+                width: 38px;
+                height: 38px;
+            }
+        }
         body {
             background-color: #000000;
             margin: 0;
@@ -6637,6 +6679,15 @@ html.tiny-pc-beauty-v12 #uiverse-starfield #stars3 {
 </style>
 </head>
 <body>
+<!-- Nút chuyển chế độ Toàn màn hình -->
+<button id="fullscreen-toggle-btn" class="fullscreen-toggle-btn" aria-label="Toàn màn hình" title="Bật/Tắt toàn màn hình">
+  <svg class="fs-icon-enter" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+  </svg>
+  <svg class="fs-icon-exit" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+  </svg>
+</button>
 <!-- Ba bộ trang trí lời chúc; chỉ hiện khi câu tương ứng xuất hiện. -->
 <div id="tiny-wish-decor" aria-hidden="true"><div class="tiny-decor-mode tiny-decor-want" id="decor-want">
   <svg class="tiny-wish-constellation a" viewBox="0 0 300 255"><path d="M10 152L48 105 85 129 126 50 176 75 226 26 288 70 M48 105 50 209 139 187 176 75 270 214 288 70"/><circle cx="10" cy="152" r="3"/><circle cx="48" cy="105" r="4"/><circle cx="85" cy="129" r="2.5"/><circle cx="126" cy="50" r="3.5"/><circle cx="176" cy="75" r="3"/><circle cx="226" cy="26" r="3.5"/><circle cx="288" cy="70" r="4"/><circle cx="50" cy="209" r="2.5"/><circle cx="139" cy="187" r="3"/><circle cx="270" cy="214" r="3"/></svg>
@@ -7113,6 +7164,90 @@ html.tiny-pc-beauty-v12 #uiverse-starfield #stars3 {
     </section>
 
     <script>
+        // ================= FULLSCREEN CONTROLLER =================
+        function reqDocFullscreen() {
+            try {
+                const doc = document.documentElement;
+                const isFS = document.fullscreenElement || 
+                             document.webkitFullscreenElement || 
+                             document.mozFullScreenElement || 
+                             document.msFullscreenElement;
+                if (!isFS) {
+                    const req = doc.requestFullscreen || 
+                                doc.webkitRequestFullscreen || 
+                                doc.mozRequestFullScreen || 
+                                doc.msRequestFullscreen;
+                    if (req) {
+                        const p = req.call(doc);
+                        if (p && typeof p.catch === 'function') p.catch(() => {});
+                    }
+                }
+            } catch (_) {}
+        }
+
+        function exitDocFullscreen() {
+            try {
+                const isFS = document.fullscreenElement || 
+                             document.webkitFullscreenElement || 
+                             document.mozFullScreenElement || 
+                             document.msFullscreenElement;
+                if (isFS) {
+                    const exit = document.exitFullscreen || 
+                                 document.webkitExitFullscreen || 
+                                 document.mozCancelFullScreen || 
+                                 document.msExitFullscreen;
+                    if (exit) {
+                        const p = exit.call(document);
+                        if (p && typeof p.catch === 'function') p.catch(() => {});
+                    }
+                }
+            } catch (_) {}
+        }
+
+        function isDocFullscreen() {
+            return !!(document.fullscreenElement || 
+                      document.webkitFullscreenElement || 
+                      document.mozFullScreenElement || 
+                      document.msFullscreenElement);
+        }
+
+        function syncFullscreenButton() {
+            const fsBtn = document.getElementById('fullscreen-toggle-btn');
+            if (!fsBtn) return;
+            const fs = isDocFullscreen();
+            const enterIcon = fsBtn.querySelector('.fs-icon-enter');
+            const exitIcon = fsBtn.querySelector('.fs-icon-exit');
+            if (enterIcon && exitIcon) {
+                enterIcon.style.display = fs ? 'none' : 'block';
+                exitIcon.style.display = fs ? 'block' : 'none';
+            }
+        }
+
+        ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+            document.addEventListener(evt, syncFullscreenButton);
+        });
+
+        const fsToggleBtn = document.getElementById('fullscreen-toggle-btn');
+        if (fsToggleBtn) {
+            fsToggleBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isDocFullscreen()) {
+                    exitDocFullscreen();
+                } else {
+                    reqDocFullscreen();
+                }
+            });
+        }
+
+        // Tự động vào fullscreen ngay ở mọi lần chạm/click đầu tiên trên toàn trang
+        ['click', 'touchstart', 'pointerdown'].forEach(evt => {
+            window.addEventListener(evt, function() {
+                reqDocFullscreen();
+            }, { passive: true, capture: true });
+        });
+
+        try { reqDocFullscreen(); } catch (_) {}
+
         const text1 = document.getElementById('text-1');
         const text2 = document.getElementById('text-2');
         const text3 = document.getElementById('text-3');
@@ -7328,6 +7463,7 @@ html.tiny-pc-beauty-v12 #uiverse-starfield #stars3 {
         function chuyenCanh() {
             {
                 if (!canClick) return;
+                reqDocFullscreen();
                 // Gọi play() ngay trong tương tác để Chrome cho phép âm thanh.
                 startMusicIfAllowed();
                 // Không được bỏ qua 9,7 giây đầu dù click nhiều lần.
@@ -11248,6 +11384,7 @@ if(window.TINY_PERF && !window.TINY_PERF.mobile){
   if (!stage || !button) return;
   let opening = false;
   button.addEventListener('click', event => {
+    reqDocFullscreen();
     event.preventDefault();
     event.stopPropagation();
     if (opening) return;

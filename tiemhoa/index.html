@@ -2,6 +2,10 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tiệm Hoa Của Em - Món Quà Yêu Thương</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +16,16 @@
 <body>
   <!-- Ambient floating particles (leaves, petals, sparkles) -->
   <div id="ambient-particles" class="particles-container"></div>
+
+  <!-- Fullscreen Pill Control -->
+  <button class="fullscreen-pill" id="fullscreen-pill" title="Bật/Tắt toàn màn hình" aria-label="Toàn màn hình">
+    <svg class="fs-icon-enter" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+    </svg>
+    <svg class="fs-icon-exit" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+      <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+    </svg>
+  </button>
 
   <!-- Music Pill Control -->
   <div class="music-pill" id="music-pill" title="Bật/Tắt nhạc nền">
